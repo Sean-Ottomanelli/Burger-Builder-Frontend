@@ -197,26 +197,44 @@ function buildBurger(){
 
 
 function createIngredientButton(){
-  
+  // let ingredientNumber = 0
   ingredientsArray.forEach(function(ingredientObj){
   let ingredientButton = document.createElement("button")
   ingredientButton.innerText = ingredientObj.name
   
   ingredientButton.addEventListener("click", function(){
+    let ingredientDiv = document.createElement("div")
+      ingredientDiv.classList.add("ingredientDiv")
     let ingredientImage = document.createElement("img")
     ingredientImage.src = ingredientObj["image_url"]
+    // ingredientImage.style.zIndex = ""
+    // ingredientNumber = ingredientNumber + 1
+    // ingredientObj.id = `${ingredientObj.name}${ingredientNumber}`
+    // ingredientImage.id = `${ingredientObj.name}${ingredientNumber}`
+    console.log(ingredientImage.id) //string
+    console.log(ingredientObj.id) //number
     ingredientImage.classList.add("ingredientImage")
-    console.log(ingredientObj.name)
-    mainContainerDiv.prepend(ingredientImage)
+    ingredientDiv.append(ingredientImage)
+    mainContainerDiv.prepend(ingredientDiv)
     createdIngredientsArray = [...createdIngredientsArray, ingredientObj]
-    console.log(createdIngredientsArray)
+
+    // ingredientImage.addEventListener("click", () => {
+    //   let currentImageId = ingredientImage.id
+    //   // console.log(currentImageId)
+    //   let updatedIngredientsArray = createdIngredientsArray.filter((ingredientObj) => {
+    //     return ingredientObj.id !== currentImageId
+    //   })
+    //   console.log(updatedIngredientsArray)
+    //   // ingredientImage.remove()
+      
+
+    })
     //
     // CSS z-index
     // push
+    mainContainerDiv.append(ingredientButton)
   })
-  mainContainerDiv.append(ingredientButton)
-  return createdIngredientsArray
-  })
-}
+  }
+
 
 // create
