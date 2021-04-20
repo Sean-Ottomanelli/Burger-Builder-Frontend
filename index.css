@@ -1,7 +1,12 @@
 #mainContainer {
     text-align: center;
+    padding-bottom: 20px;
 }
 
 #topOfPage {
     text-align: center;
+}
+
+body {
+    background-color: powderblue
 }
