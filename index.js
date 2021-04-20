@@ -205,6 +205,7 @@ function createIngredientButton(){
   ingredientButton.addEventListener("click", function(){
     let ingredientDiv = document.createElement("div")
       ingredientDiv.classList.add("ingredientDiv")
+      ingredientDiv.id = "ingredient"
     let ingredientImage = document.createElement("img")
     ingredientImage.src = ingredientObj["image_url"]
     // ingredientImage.style.zIndex = ""
