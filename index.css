@@ -1,5 +1,6 @@
 #mainContainer {
     text-align: center;
+    padding-bottom: 20px;
 }
 
 #topOfPage {
@@ -8,4 +9,8 @@
 
 .ingredientImage {
     width: 400px;
+}
+
+body {
+    background-color: powderblue
 }
