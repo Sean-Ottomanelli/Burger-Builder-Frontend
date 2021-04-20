@@ -3,15 +3,16 @@ let mainContainerDiv = document.querySelector("#mainContainer")
 currentBurger = {}
 // builtBurger = {}
 let buildButton = document.querySelector("#buildButton")
+let createdIngredientsArray = []
 
 let ingredientsArray = [
   {
     name: "Burger Bun Bottom", 
-    image_url: "/Users/jennafritz/Development/Code/Module1/Burger-Builder-Phase-1-Project/Burger Bun Bottom.png"
+    image_url: "Burger Bun Bottom.png"
   },
   {
     name: "Burger Bun Top",
-    image_url: "/Users/jennafritz/Development/Code/Module1/Burger-Builder-Phase-1-Project/Burger Bun Top.png"
+    image_url: "Burger Bun Top.png"
   }
 ]
 
@@ -26,7 +27,7 @@ fetch("http://localhost:3000/burgers")
 function burgerTnButtonMaker(burgerObj) {
     let burgerTnContainer = document.createElement("button")
     let testImage = document.createElement ("img")
-    testImage.src = "/Users/jennafritz/Development/Code/Module1/Burger-Builder-Phase-1-Project/Burger Full 1.png"
+    testImage.src = "Burger Full 1.png"
     testImage.style.width = "100px"
     let burgerTnTitle =document.createElement("h3")
     burgerTnTitle.innerText = burgerObj.burgerName
@@ -45,7 +46,8 @@ function displayBurger(burgerObj) {
   let burgerCreator = document.createElement("h3")
     burgerCreator.innerText = "By: " + burgerObj.username
   let burgerImage = document.createElement("img")
-      burgerImage.src = "/Users/jennafritz/Development/Code/Module1/Burger-Builder-Phase-1-Project/Burger-Builder-Frontend/Burger Full 1.png"
+      burgerImage.src = "Burger Full 1.png"
+      burgerImage.classList.add("displayImage")
     let burgerDescrHeader = document.createElement("h4")
       burgerDescrHeader.innerText = "Description:"
   let burgerDescr = document.createElement("p")
@@ -133,16 +135,69 @@ function displayBurger(burgerObj) {
 
 buildButton.addEventListener("click", function() {
   mainContainerDiv.innerText = ""
-  let createdIngredientsArrayGlobal = createIngredientButton()
-  console.log(createdIngredientsArrayGlobal)
+  buildBurger()
+  createIngredientButton()
+
 })
 
 function buildBurger(){
+  let newBurgerForm = document.createElement("form")
+  let newBurgerTitle = document.createElement("input")
+  let newBurgerTitleLabel = document.createElement("label")
+      newBurgerTitleLabel.innerText = "Title: "
+      newBurgerTitleLabel.append(newBurgerTitle)
+      newBurgerTitle.type = "text"
+      newBurgerTitle.id = "newBurgerTitle"
+  let newBurgerUsername = document.createElement("input")
+  let newBurgerUsernameLabel = document.createElement("label")
+      newBurgerUsernameLabel.innerText = "Username: "
+      newBurgerUsernameLabel.append(newBurgerUsername)
+      newBurgerUsername.type = "text"
+      newBurgerUsername.id = "newBurgerUsername"
+  let newBurgerDescription = document.createElement("input")
+  let newBurgerDescriptionLabel = document.createElement("label")
+      newBurgerDescriptionLabel.innerText = "Description: "
+      newBurgerDescriptionLabel.append(newBurgerDescription)
+      newBurgerDescription.type = "textarea"
+      newBurgerDescription.id = "newBurgerDescription"
+  let newBurgerButton = document.createElement("button")
+      newBurgerButton.innerText = "Submit"
+  newBurgerForm.append(newBurgerTitleLabel, newBurgerUsernameLabel, newBurgerDescriptionLabel, newBurgerButton)
+  mainContainerDiv.append(newBurgerForm)
+  
+  newBurgerForm.addEventListener("submit", (evt) => {
+    evt.preventDefault()
+    let createdBurgerTitle = evt.target.newBurgerTitle.value;
+    let createdBurgerUsername = evt.target.newBurgerUsername.value;
+    let createdBurgerDescription = evt.target.newBurgerDescription.value;
 
+    fetch("http://localhost:3000/burgers", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    username: createdBurgerUsername,
+    burgerName: createdBurgerTitle,
+    ingredients: createdIngredientsArray,
+    likes: 0,
+    comments: [],
+    description: createdBurgerDescription
+  }),
+})
+  .then((r) => r.json())
+  .then((newlyCreatedBurgerObj) => {
+    console.log(newlyCreatedBurgerObj)
+    burgerTnButtonMaker(newlyCreatedBurgerObj)
+  });
+  mainContainerDiv.innerText = ""
+  evt.target.reset()
+})
 }
 
+
 function createIngredientButton(){
-  let createdIngredientsArray = []
+  
   ingredientsArray.forEach(function(ingredientObj){
   let ingredientButton = document.createElement("button")
   ingredientButton.innerText = ingredientObj.name
