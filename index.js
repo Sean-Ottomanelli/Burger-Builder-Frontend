@@ -4,6 +4,7 @@ currentBurger = {}
 // builtBurger = {}
 let buildButton = document.querySelector("#buildButton")
 let createdIngredientsArray = []
+let displayContainer = document.querySelector("#displayDiv")
 
 let ingredientsArray = [
   {
@@ -19,7 +20,6 @@ let ingredientsArray = [
 fetch("http://localhost:3000/burgers")
   .then((r) => r.json())
   .then((burgersArray) => {
-      console.log(burgersArray)
       burgersArray.forEach(burgerTnButtonMaker)
     });
 
@@ -35,26 +35,28 @@ function burgerTnButtonMaker(burgerObj) {
     burgerTnCreator.innerText = burgerObj.username;
     burgerTnContainer.append(burgerTnTitle, burgerTnCreator, testImage)
     burgerContainerDiv.append(burgerTnContainer)
-    burgerTnContainer.addEventListener("click", (evt) => {displayBurger(burgerObj)})
+    burgerTnContainer.addEventListener("click", (evt) => {
+      displayContainer.innerText = ""
+      displayBurger(burgerObj)
+    })
 }
     
 function displayBurger(burgerObj) {
+  console.log(burgerObj)
   currentBurger = burgerObj
   mainContainerDiv.innerText = ""
+  mainContainerDiv.append(displayContainer)
   let burgerTitle = document.createElement("h2")
     burgerTitle.innerText = burgerObj.burgerName
   let burgerCreator = document.createElement("h3")
     burgerCreator.innerText = "By: " + burgerObj.username
-  let burgerImage = document.createElement("img")
-      burgerImage.src = "Burger Full 1.png"
-      burgerImage.classList.add("displayImage")
-    let burgerDescrHeader = document.createElement("h4")
+  let burgerDescrHeader = document.createElement("h4")
       burgerDescrHeader.innerText = "Description:"
   let burgerDescr = document.createElement("p")
       burgerDescr.innerText = burgerObj.description
   let burgerIngredientsHeader = document.createElement("h4")
       burgerIngredientsHeader.innerText = "Ingredients:"
-  let burgerIngredientsDiv = document.createElement("div")
+  let burgerIngredientsUl = document.createElement("ul")
   let numLikes = document.createElement("span")
     numLikes.innerText = burgerObj.likes
   let burgerLikeButton = document.createElement("button")
@@ -62,7 +64,7 @@ function displayBurger(burgerObj) {
   burgerLikeButton.append(numLikes)
   let burgerCommentHeader = document.createElement("h4")
       burgerCommentHeader.innerText = "Comments:"
-  let burgerCommentDiv = document.createElement("div")
+  let burgerCommentUl = document.createElement("ul")
   let burgerCommentForm = document.createElement("form")
     burgerCommentForm.id = "burgerCommentForm"
   let burgerCommentInput = document.createElement("input")
@@ -77,17 +79,21 @@ function displayBurger(burgerObj) {
   commentsArray.forEach(appendComment)
   
   function appendComment(comment){
-    let commentP = document.createElement("p")
-    commentP.innerText = comment
-    burgerCommentDiv.append(commentP)
+    let commentLi = document.createElement("li")
+    commentLi.innerText = comment
+    burgerCommentUl.append(commentLi)
   }
   
     
   let ingredientsArray = burgerObj.ingredients
   ingredientsArray.forEach(function(ingredientObj){
-    let ingredientP = document.createElement("p")
-    ingredientP.innerText = ingredientObj.name
-    burgerIngredientsDiv.append(ingredientP)
+    let ingredientLi = document.createElement("li")
+    ingredientLi.innerText = ingredientObj.name
+    burgerIngredientsUl.append(ingredientLi)
+  })
+
+  currentBurger.ingredients.forEach((ingredientObj) => {
+    ingredientDisplayer(ingredientObj)
   })
 
   burgerLikeButton.addEventListener("click", () => {
@@ -129,12 +135,13 @@ function displayBurger(burgerObj) {
       event.target.reset()
   })
 
-  mainContainerDiv.append(burgerTitle, burgerCreator, burgerImage, burgerDescrHeader, burgerDescr, burgerIngredientsHeader, burgerIngredientsDiv, burgerLikeButton, burgerCommentHeader, burgerCommentDiv, burgerCommentForm)
+  mainContainerDiv.append(burgerTitle, burgerCreator, burgerDescrHeader, burgerDescr, burgerIngredientsHeader, burgerIngredientsUl, burgerLikeButton, burgerCommentHeader, burgerCommentUl, burgerCommentForm)
 }
 
 
 buildButton.addEventListener("click", function() {
   mainContainerDiv.innerText = ""
+  mainContainerDiv.append(displayContainer)
   buildBurger()
   createIngredientButton()
 
@@ -187,7 +194,6 @@ function buildBurger(){
 })
   .then((r) => r.json())
   .then((newlyCreatedBurgerObj) => {
-    console.log(newlyCreatedBurgerObj)
     burgerTnButtonMaker(newlyCreatedBurgerObj)
   });
   mainContainerDiv.innerText = ""
@@ -196,39 +202,15 @@ function buildBurger(){
 }
 
 
+
 function createIngredientButton(){
   // let ingredientNumber = 0
   ingredientsArray.forEach(function(ingredientObj){
   let ingredientButton = document.createElement("button")
   ingredientButton.innerText = ingredientObj.name
-  
   ingredientButton.addEventListener("click", function(){
-    let ingredientDiv = document.createElement("div")
-      ingredientDiv.classList.add("ingredientDiv")
-      ingredientDiv.id = "ingredient"
-    let ingredientImage = document.createElement("img")
-    ingredientImage.src = ingredientObj["image_url"]
-    // ingredientImage.style.zIndex = ""
-    // ingredientNumber = ingredientNumber + 1
-    // ingredientObj.id = `${ingredientObj.name}${ingredientNumber}`
-    // ingredientImage.id = `${ingredientObj.name}${ingredientNumber}`
-    console.log(ingredientImage.id) //string
-    console.log(ingredientObj.id) //number
-    ingredientImage.classList.add("ingredientImage")
-    ingredientDiv.append(ingredientImage)
-    mainContainerDiv.prepend(ingredientDiv)
     createdIngredientsArray = [...createdIngredientsArray, ingredientObj]
-
-    // ingredientImage.addEventListener("click", () => {
-    //   let currentImageId = ingredientImage.id
-    //   // console.log(currentImageId)
-    //   let updatedIngredientsArray = createdIngredientsArray.filter((ingredientObj) => {
-    //     return ingredientObj.id !== currentImageId
-    //   })
-    //   console.log(updatedIngredientsArray)
-    //   // ingredientImage.remove()
-      
-
+    ingredientDisplayer(ingredientObj)
     })
     //
     // CSS z-index
@@ -237,5 +219,15 @@ function createIngredientButton(){
   })
   }
 
+function ingredientDisplayer(ingredientObj) {
+    let ingredientDiv = document.createElement("div")
+    ingredientDiv.classList.add("ingredientDiv")
+    //ingredientDiv.id = "ingredient"
+  let ingredientImage = document.createElement("img")
+  ingredientImage.src = ingredientObj["image_url"]
+  ingredientImage.classList.add("ingredientImage")
+  ingredientDiv.append(ingredientImage)
+  displayContainer.prepend(ingredientDiv)
+  }
 
 // create
