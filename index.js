@@ -9,13 +9,98 @@ let currentIngredientObj = {}
 
 let ingredientsArray = [
   {
-    name: "Burger Bun Bottom", 
+    name: "Arugala", 
+    image_url: "Ingredient Images/Arugala.png"
+  },
+  {
+    name: "Bacon",
+    image_url: "Ingredient Images/Bacon.png"
+  },
+  {
+    name: "Beef Patty",
+    image_url: "Ingredient Images/Beef Patty.png"
+  },
+  {
+    name: "Burger Bun Bottom",
     image_url: "Ingredient Images/Burger Bun Bottom.png"
+  },
+  {
+    name: "Burger Bun Middle",
+    image_url: "Ingredient Images/Burger Bun Middle.png"
   },
   {
     name: "Burger Bun Top",
     image_url: "Ingredient Images/Burger Bun Top.png"
-  }
+  },
+  {
+    name: "Cheddar Cheese Slice",
+    image_url: "Ingredient Images/Cheddar Cheese Slice.png"
+  },
+  {
+    name: "Dill Pickles",
+    image_url: "Ingredient Images/Dill Pickles.png"
+  },
+  {
+    name: "Fried Egg",
+    image_url: "Ingredient Images/Fried Egg.png"
+  },
+  {
+    name: "Jalapenos",
+    image_url: "Ingredient Images/Jalapenos.png"
+  },
+  {
+    name: "Ketchup",
+    image_url: "Ingredient Images/Ketchup.png"
+  },
+  {
+    name: "Lettuce",
+    image_url: "Ingredient Images/Lettuce.png"
+  },
+  {
+    name: "Mayonnaise",
+    image_url: "Ingredient Images/Mayonnaise.png"
+  },
+  {
+    name: "Mushrooms",
+    image_url: "Ingredient Images/Mushrooms.png"
+  },
+  {
+    name: "Mustard",
+    image_url: "Ingredient Images/Mustard.png"
+  },
+  {
+    name: "Onions",
+    image_url: "Ingredient Images/Onions.png"
+  },
+  {
+    name: "Peppers",
+    image_url: "Ingredient Images/Peppers.png"
+  },
+  {
+    name: "Salami",
+    image_url: "Ingredient Images/Salami.png"
+  },
+  {
+    name: "Sweet Pickles",
+    image_url: "Ingredient Images/Sweet Pickles.png"
+  },
+  {
+    name: "Swiss Cheese Slice",
+    image_url: "Ingredient Images/Swiss Cheese Slice.png"
+  },
+  {
+    name: "Tomato",
+    image_url: "Ingredient Images/Tomato.png"
+  },
+  {
+    name: "Turkey Patty",
+    image_url: "Ingredient Images/Turkey Patty.png"
+  },
+  {
+    name: "Veggie Patty",
+    image_url: "Ingredient Images/Veggie Patty.png"
+  },
+  
 ]
 
 fetch("http://localhost:3000/burgers")
@@ -211,8 +296,9 @@ function createIngredientButton(){
     ingredientButton.innerText = ingredientObj.name
     
     ingredientButton.addEventListener("click", function(){
-    createdIngredientsArray = [...createdIngredientsArray, ingredientObj]
-    ingredientDisplayer(ingredientObj)
+       let newIngredientObj = {...ingredientObj}
+    createdIngredientsArray = [...createdIngredientsArray, newIngredientObj]
+    ingredientDisplayer(newIngredientObj)
 
     })
     //
@@ -226,26 +312,24 @@ let idNumber = 0
 function ingredientDisplayer(ingredientObj) {
     let ingredientDiv = document.createElement("div")
     ingredientDiv.classList.add("ingredientDiv")
-    // idNumber = idNumber + 1
-    // ingredientObj.id = `${ingredientObj.name}${idNumber}`
+    idNumber = idNumber + 1
+    ingredientDiv.id = idNumber;
+    ingredientObj.id = ingredientObj.name + idNumber
   let ingredientImage = document.createElement("img")
   ingredientImage.src = ingredientObj["image_url"]
   ingredientImage.classList.add("ingredientImage")
   ingredientDiv.append(ingredientImage)
   displayContainer.prepend(ingredientDiv)
-  // console.log(ingredientObj.id)
-
-  // ingredientImage.addEventListener("click", () => {
-  //   currentIngredientObj = ingredientObj
-  //   // let keptIngredientsArray = createdIngredientsArray.filter((existingIngredientObj) => {
-  //     console.log(currentIngredientObj)
-  //   //   return existingIngredientObj.id !== ingredientObj.id
-  //   })
-    
-  }
   
+  ingredientImage.addEventListener("click", () => {
+    console.log(ingredientObj)
+    let keptIngredientsArray = createdIngredientsArray.filter((existingIngredientObj) => {
+      return existingIngredientObj.id !== ingredientObj.id
+    })
+    console.log(keptIngredientsArray)
+    createdIngredientsArray = keptIngredientsArray
+    ingredientDiv.remove();
 
-// create
-function deleteIngredient(ingredientObj){
-
+    
+  })
 }
