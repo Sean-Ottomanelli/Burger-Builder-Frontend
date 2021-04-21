@@ -5,15 +5,16 @@ currentBurger = {}
 let buildButton = document.querySelector("#buildButton")
 let createdIngredientsArray = []
 let displayContainer = document.querySelector("#displayDiv")
+let currentIngredientObj = {}
 
 let ingredientsArray = [
   {
     name: "Burger Bun Bottom", 
-    image_url: "Burger Bun Bottom.png"
+    image_url: "Ingredient Images/Burger Bun Bottom.png"
   },
   {
     name: "Burger Bun Top",
-    image_url: "Burger Bun Top.png"
+    image_url: "Ingredient Images/Burger Bun Top.png"
   }
 ]
 
@@ -27,7 +28,7 @@ fetch("http://localhost:3000/burgers")
 function burgerTnButtonMaker(burgerObj) {
     let burgerTnContainer = document.createElement("button")
     let testImage = document.createElement ("img")
-    testImage.src = "Burger Full 1.png"
+    testImage.src = "Ingredient Images/Burger Full 1.png"
     testImage.style.width = "100px"
     let burgerTnTitle =document.createElement("h3")
     burgerTnTitle.innerText = burgerObj.burgerName
@@ -206,11 +207,13 @@ function buildBurger(){
 function createIngredientButton(){
   // let ingredientNumber = 0
   ingredientsArray.forEach(function(ingredientObj){
-  let ingredientButton = document.createElement("button")
-  ingredientButton.innerText = ingredientObj.name
-  ingredientButton.addEventListener("click", function(){
+    let ingredientButton = document.createElement("button")
+    ingredientButton.innerText = ingredientObj.name
+    
+    ingredientButton.addEventListener("click", function(){
     createdIngredientsArray = [...createdIngredientsArray, ingredientObj]
     ingredientDisplayer(ingredientObj)
+
     })
     //
     // CSS z-index
@@ -219,15 +222,30 @@ function createIngredientButton(){
   })
   }
 
+let idNumber = 0
 function ingredientDisplayer(ingredientObj) {
     let ingredientDiv = document.createElement("div")
     ingredientDiv.classList.add("ingredientDiv")
-    //ingredientDiv.id = "ingredient"
+    // idNumber = idNumber + 1
+    // ingredientObj.id = `${ingredientObj.name}${idNumber}`
   let ingredientImage = document.createElement("img")
   ingredientImage.src = ingredientObj["image_url"]
   ingredientImage.classList.add("ingredientImage")
   ingredientDiv.append(ingredientImage)
   displayContainer.prepend(ingredientDiv)
+  // console.log(ingredientObj.id)
+
+  // ingredientImage.addEventListener("click", () => {
+  //   currentIngredientObj = ingredientObj
+  //   // let keptIngredientsArray = createdIngredientsArray.filter((existingIngredientObj) => {
+  //     console.log(currentIngredientObj)
+  //   //   return existingIngredientObj.id !== ingredientObj.id
+  //   })
+    
   }
+  
 
 // create
+function deleteIngredient(ingredientObj){
+
+}
