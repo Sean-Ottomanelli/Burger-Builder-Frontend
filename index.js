@@ -227,6 +227,7 @@ function displayBurger(burgerObj) {
 
 buildButton.addEventListener("click", function() {
   mainContainerDiv.innerText = ""
+  displayContainer.innerText = ""
   mainContainerDiv.append(displayContainer)
   buildBurger()
   createIngredientButton()
@@ -312,15 +313,21 @@ let idNumber = 0
 function ingredientDisplayer(ingredientObj) {
     let ingredientDiv = document.createElement("div")
     ingredientDiv.classList.add("ingredientDiv")
-    idNumber = idNumber + 1
     ingredientDiv.id = idNumber;
     ingredientObj.id = ingredientObj.name + idNumber
-  let ingredientImage = document.createElement("img")
-  ingredientImage.src = ingredientObj["image_url"]
-  ingredientImage.classList.add("ingredientImage")
-  ingredientDiv.append(ingredientImage)
-  displayContainer.prepend(ingredientDiv)
-  
+    let ingredientImage = document.createElement("img")
+    ingredientImage.src = ingredientObj["image_url"]
+    ingredientImage.classList.add("ingredientImage")
+    // ingredientDiv.id = ingredientObj.name + "Image" + idNumber;
+    ingredientDiv.style.zIndex = parseInt(idNumber, 10)
+    bottomStyle = idNumber * 40
+    ingredientDiv.style.bottom = bottomStyle + "px"
+    ingredientImage.classList.add("ingredientImage")
+    ingredientDiv.append(ingredientImage)
+    displayContainer.append(ingredientDiv)
+    
+    idNumber = idNumber + 1
+
   ingredientImage.addEventListener("click", () => {
     console.log(ingredientObj)
     let keptIngredientsArray = createdIngredientsArray.filter((existingIngredientObj) => {

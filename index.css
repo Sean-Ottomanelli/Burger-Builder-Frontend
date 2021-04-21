@@ -1,24 +1,71 @@
-#mainContainer {
+/* #mainContainer { 
     text-align: center;
-    padding-bottom: 20px;
+    min-height: 500px;
+    margin: 0 auto;
 }
 
 #topOfPage {
     text-align: center;
 }
 
+
+.ingredientDiv {
+    position: absolute;
+    margin: 0 auto;
+    border: 1px red solid;
+}
+
+#displayDiv {
+    position: relative;
+    min-height: 500px;
+    overflow: visible;
+    margin: 0 auto;
+    border: 1px red solid;
+    width: 400px;
+}
+
+
+
+
+#burgersContainer {
+    margin: 0 auto;
+}
+
+*/
+
 .ingredientImage {
     width: 400px;
+    border: 1px black solid;
+    margin-bottom: -200px;
+    /* transform: translateY(-10px) */
+}
+
+body {
+    background-color: powderblue;
+}
+
+ul {
+    list-style: none;
 }
 
 .displayImage {
     width: 400px;
 }
 
-body {
-    background-color: powderblue
+#mainContainer {
+    margin: 0 auto;
+    border: 1px green solid;
 }
 
-ul{
-    list-style: none;
+#displayDiv {
+    margin-bottom: 200px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    align-content: space-between;
+    border: 1px red solid;
+    min-height: 250px;
 }
+
+
+
