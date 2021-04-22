@@ -9,18 +9,6 @@ let currentIngredientObj = {}
 
 let ingredientsArray = [
   {
-    name: "Arugala", 
-    image_url: "Ingredient Images/Arugala.png"
-  },
-  {
-    name: "Bacon",
-    image_url: "Ingredient Images/Bacon.png"
-  },
-  {
-    name: "Beef Patty",
-    image_url: "Ingredient Images/Beef Patty.png"
-  },
-  {
     name: "Burger Bun Bottom",
     image_url: "Ingredient Images/Burger Bun Bottom.png"
   },
@@ -33,64 +21,8 @@ let ingredientsArray = [
     image_url: "Ingredient Images/Burger Bun Top.png"
   },
   {
-    name: "Cheddar Cheese Slice",
-    image_url: "Ingredient Images/Cheddar Cheese Slice.png"
-  },
-  {
-    name: "Dill Pickles",
-    image_url: "Ingredient Images/Dill Pickles.png"
-  },
-  {
-    name: "Fried Egg",
-    image_url: "Ingredient Images/Fried Egg.png"
-  },
-  {
-    name: "Jalapenos",
-    image_url: "Ingredient Images/Jalapenos.png"
-  },
-  {
-    name: "Ketchup",
-    image_url: "Ingredient Images/Ketchup.png"
-  },
-  {
-    name: "Lettuce",
-    image_url: "Ingredient Images/Lettuce.png"
-  },
-  {
-    name: "Mayonnaise",
-    image_url: "Ingredient Images/Mayonnaise.png"
-  },
-  {
-    name: "Mushrooms",
-    image_url: "Ingredient Images/Mushrooms.png"
-  },
-  {
-    name: "Mustard",
-    image_url: "Ingredient Images/Mustard.png"
-  },
-  {
-    name: "Onions",
-    image_url: "Ingredient Images/Onions.png"
-  },
-  {
-    name: "Peppers",
-    image_url: "Ingredient Images/Peppers.png"
-  },
-  {
-    name: "Salami",
-    image_url: "Ingredient Images/Salami.png"
-  },
-  {
-    name: "Sweet Pickles",
-    image_url: "Ingredient Images/Sweet Pickles.png"
-  },
-  {
-    name: "Swiss Cheese Slice",
-    image_url: "Ingredient Images/Swiss Cheese Slice.png"
-  },
-  {
-    name: "Tomato",
-    image_url: "Ingredient Images/Tomato.png"
+    name: "Beef Patty",
+    image_url: "Ingredient Images/Beef Patty.png"
   },
   {
     name: "Turkey Patty",
@@ -100,7 +32,74 @@ let ingredientsArray = [
     name: "Veggie Patty",
     image_url: "Ingredient Images/Veggie Patty.png"
   },
-  
+  {
+    name: "Cheddar Cheese Slice",
+    image_url: "Ingredient Images/Cheddar Cheese Slice.png"
+  },
+  {
+    name: "Swiss Cheese Slice",
+    image_url: "Ingredient Images/Swiss Cheese Slice.png"
+  },
+  {
+    name: "Fried Egg",
+    image_url: "Ingredient Images/Fried Egg.png"
+  },
+  {
+    name: "Salami",
+    image_url: "Ingredient Images/Salami.png"
+  },
+  {
+    name: "Bacon",
+    image_url: "Ingredient Images/Bacon.png"
+  },
+  {
+    name: "Arugala", 
+    image_url: "Ingredient Images/Arugala.png"
+  },
+  {
+    name: "Lettuce",
+    image_url: "Ingredient Images/Lettuce.png"
+  },
+  {
+    name: "Tomato",
+    image_url: "Ingredient Images/Tomato.png"
+  },
+  {
+    name: "Onions",
+    image_url: "Ingredient Images/Onions.png"
+  },
+  {
+    name: "Dill Pickles",
+    image_url: "Ingredient Images/Dill Pickles.png"
+  },
+  {
+    name: "Sweet Pickles",
+    image_url: "Ingredient Images/Sweet Pickles.png"
+  },
+  {
+    name: "Jalapenos",
+    image_url: "Ingredient Images/Jalapenos.png"
+  },
+  {
+    name: "Mushrooms",
+    image_url: "Ingredient Images/Mushrooms.png"
+  },
+  {
+    name: "Peppers",
+    image_url: "Ingredient Images/Peppers.png"
+  },
+  {
+    name: "Ketchup",
+    image_url: "Ingredient Images/Ketchup.png"
+  },
+  {
+    name: "Mustard",
+    image_url: "Ingredient Images/Mustard.png"
+  },
+  {
+    name: "Mayonnaise",
+    image_url: "Ingredient Images/Mayonnaise.png"
+  }
 ]
 
 fetch("http://localhost:3000/burgers")
@@ -117,6 +116,7 @@ function burgerTnButtonMaker(burgerObj) {
     testImage.src = "Ingredient Images/Burger Full 1.png"
     testImage.style.width = "100px"
     let burgerTnTitle =document.createElement("h3")
+      burgerTnTitle.classList.add("burgerTitleH3")
     burgerTnTitle.innerText = burgerObj.burgerName
     let burgerTnCreator =document.createElement("h4")
     burgerTnCreator.innerText = burgerObj.username;
@@ -133,6 +133,8 @@ function displayBurger(burgerObj) {
   currentBurger = burgerObj
   mainContainerDiv.innerText = ""
   mainContainerDiv.append(displayContainer)
+  let burgerDetailsDiv = document.createElement("div")
+    burgerDetailsDiv.id = "burgerDetailsDiv"
   let burgerTitle = document.createElement("h2")
     burgerTitle.innerText = burgerObj.burgerName
   let burgerCreator = document.createElement("h3")
@@ -141,17 +143,26 @@ function displayBurger(burgerObj) {
       burgerDescrHeader.innerText = "Description:"
   let burgerDescr = document.createElement("p")
       burgerDescr.innerText = burgerObj.description
-  let burgerIngredientsHeader = document.createElement("h4")
-      burgerIngredientsHeader.innerText = "Ingredients:"
-  let burgerIngredientsUl = document.createElement("ul")
+  let burgerRecipeButton = document.createElement("button")
+      burgerRecipeButton.innerText = "How To Build This Burger"
+  let burgerIngredientsDiv = document.createElement("div")
+    burgerIngredientsDiv.id = "burgerIngredientsDiv"
+  let burgerIngredientsOl = document.createElement("ol")
+    burgerIngredientsOl.id = "burgerIngredientsOl"
+  let burgerDirectionsP = document.createElement("p")
+    burgerDirectionsP.id = "burgerDirectionsP"
+    burgerDirectionsP.innerText = "Place ingredients in the following order:"
   let numLikes = document.createElement("span")
     numLikes.innerText = burgerObj.likes
   let burgerLikeButton = document.createElement("button")
   burgerLikeButton.innerText = "Likes: "
   burgerLikeButton.append(numLikes)
+  let burgerCommentDiv = document.createElement("div")
+    burgerCommentDiv.id = "burgerCommentDiv"
   let burgerCommentHeader = document.createElement("h4")
       burgerCommentHeader.innerText = "Comments:"
-  let burgerCommentUl = document.createElement("ul")
+  let burgerCommentListDiv = document.createElement("div")
+    burgerCommentListDiv.id = "burgerCommentList"
   let burgerCommentForm = document.createElement("form")
     burgerCommentForm.id = "burgerCommentForm"
   let burgerCommentInput = document.createElement("input")
@@ -166,9 +177,9 @@ function displayBurger(burgerObj) {
   commentsArray.forEach(appendComment)
   
   function appendComment(comment){
-    let commentLi = document.createElement("li")
-    commentLi.innerText = comment
-    burgerCommentUl.append(commentLi)
+    let commentP = document.createElement("p")
+    commentP.innerText = comment
+    burgerCommentListDiv.append(commentP)
   }
   
     
@@ -176,7 +187,7 @@ function displayBurger(burgerObj) {
   ingredientsArray.forEach(function(ingredientObj){
     let ingredientLi = document.createElement("li")
     ingredientLi.innerText = ingredientObj.name
-    burgerIngredientsUl.append(ingredientLi)
+    burgerIngredientsOl.append(ingredientLi)
   })
 
   currentBurger.ingredients.forEach((ingredientObj) => {
@@ -222,7 +233,16 @@ function displayBurger(burgerObj) {
       event.target.reset()
   })
 
-  mainContainerDiv.append(burgerTitle, burgerCreator, burgerDescrHeader, burgerDescr, burgerIngredientsHeader, burgerIngredientsUl, burgerLikeButton, burgerCommentHeader, burgerCommentUl, burgerCommentForm)
+  burgerIngredientsDiv.append(burgerRecipeButton)
+  burgerRecipeButton.addEventListener("click", () => {
+    // burgerIngredientsDiv.innerText = ""
+    burgerIngredientsDiv.append(burgerDirectionsP, burgerIngredientsOl)
+  })
+
+  burgerCommentDiv.append(burgerCommentHeader, burgerCommentListDiv, burgerCommentForm)
+
+  burgerDetailsDiv.append(burgerTitle, burgerCreator, burgerDescrHeader, burgerDescr, burgerIngredientsDiv, burgerLikeButton, burgerCommentDiv)
+  mainContainerDiv.append(burgerDetailsDiv)
 }
 
 
@@ -266,7 +286,7 @@ function buildBurger(){
   
   newBurgerForm.addEventListener("submit", (evt) => {
     evt.preventDefault()
-    let createdBurgerTitle = evt.target.newBurgerTitle.value;
+    let createdBurgerTitle = evt.target.newBurgerTitle.value
     let createdBurgerUsername = evt.target.newBurgerUsername.value;
     let createdBurgerDescription = evt.target.newBurgerDescription.value;
 

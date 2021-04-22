@@ -4,9 +4,6 @@
     margin: 0 auto;
 }
 
-#topOfPage {
-    text-align: center;
-}
 
 
 .ingredientDiv {
@@ -33,9 +30,14 @@
 
 */
 
+#topOfPage {
+    text-align: center;
+}
+
+
 .ingredientImage {
     width: 400px;
-    border: 1px black solid;
+    /* border: 1px black solid; */
     margin-bottom: -200px;
     /* transform: translateY(-10px) */
 }
@@ -54,19 +56,21 @@ ul {
 
 #mainContainer {
     margin: 0 auto;
-    border: 1px green solid;
+    /* border: 1px green solid; */
+    margin-top: 20px;
 }
 
 #newBurgerFormDiv{
     margin: 0 auto;
-    border: 2px purple solid;
+    /* border: 2px purple solid; */
 }
 
 #ingredientButtonDiv{
     margin: 0 auto;
-    border: 2px pink solid;
+    /* border: 2px pink solid; */
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 #displayDiv {
@@ -75,7 +79,7 @@ ul {
     flex-direction: column-reverse;
     align-items: center;
     align-content: space-between;
-    border: 1px red solid;
+    /* border: 1px red solid; */
     min-height: 250px;
 }
 
@@ -99,4 +103,64 @@ ul {
     margin: 5px;
     background-color: white;
     border-radius: 8px;
+}
+
+#burgersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#communityHeaderDiv {
+    text-align: center;
+}
+
+.burgerTitleH3 {
+    width: 180;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#burgerDetailsDiv {
+    /* border: 1px white solid; */
+    margin: 0 auto;
+    text-align: center;
+}
+
+#burgerIngredientsOl {
+    text-align: left;
+    width: 200px;
+    /* border: 1px black solid; */
+    align-self: center;
+    margin: 0 auto;
+}
+
+#burgerIngredientsDiv {
+    margin: 15px;
+    /* border: 1px yellow solid; */
+}
+
+#burgerCommentList {
+    text-align: center;
+    width: 300px;
+    /* background-color: white; */
+    align-self: center;
+    margin: 0 auto;
+}
+
+#burgerCommentDiv {
+    margin: 15px;
+    /* border: 1px violet solid; */
+}
+
+#pageBreak {
+    width: 85%;
+    background-color: black;
+    height: 2px;
+    margin-top: 50px;
+}
+
+#communityHeaderDiv {
+    margin-top: 50px;
 }
