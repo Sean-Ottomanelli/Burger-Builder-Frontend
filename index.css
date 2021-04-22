@@ -69,6 +69,7 @@ ul {
     margin: 0 auto;
     /* border: 1px green solid; */
     margin-top: 20px;
+    
 }
 
 #newBurgerFormDiv{
@@ -159,7 +160,7 @@ ul {
 
 #burgerIngredientsOl {
     text-align: left;
-    width: 200px;
+    width: 250px;
     /* border: 1px black solid; */
     align-self: center;
     margin: 0 auto;
@@ -265,6 +266,60 @@ ul {
     display: block;
     margin: 0 auto;
 }
+
+
+/* #loginForm input {
+    display: block;
+    text-align: right;
+    border: 1px black solid;
+} */
+
+#loginButton {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 30px;
+}
+
+#loginUsername {
+    display: block;
+    width: 200px;
+    background-color: rgb(204, 204, 255);
+    border-bottom: 1px navy solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#registerButton {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 30px;
+}
+
+#registerUsername {
+    display: block;
+    width: 200px;
+    background-color: rgb(204, 204, 255);
+    border-bottom: 1px navy solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+div#userFormDiv form#loginForm button {
+    display: block;
+    margin-right: 0px;
+    border: 1px black solid;
+}
+
 #creditsDiv{
     width: 400px;
     display: block;

@@ -6,6 +6,8 @@ let buildButton = document.querySelector("#buildButton")
 let createdIngredientsArray = []
 let displayContainer = document.querySelector("#displayDiv")
 let currentIngredientObj = {}
+let currentUserObjArray = {}
+let loggedInUser = {}
 
 let ingredientsArray = [
   {
@@ -102,12 +104,15 @@ let ingredientsArray = [
   }
 ]
 
-fetch("http://localhost:3000/burgers")
-  .then((r) => r.json())
-  .then((burgersArray) => {
-      burgersArray.forEach(burgerTnButtonMaker)
-    });
 
+fetch("http://localhost:3000/users/?_embed=burgers")
+  .then((r) => r.json())
+  .then((arrayOfUserObjs) => {
+      arrayOfUserObjs.forEach((userObj) => {
+        let burgersArray = userObj.burgers
+        burgersArray.forEach(burgerTnButtonMaker)
+      })
+    });
 
 function burgerTnButtonMaker(burgerObj) {
     let burgerTnContainer = document.createElement("button")
@@ -118,7 +123,7 @@ function burgerTnButtonMaker(burgerObj) {
     let burgerTnTitle =document.createElement("h3")
       burgerTnTitle.classList.add("burgerTitleH3")
     burgerTnTitle.innerText = burgerObj.burgerName
-    let burgerTnCreator =document.createElement("h4")
+    let burgerTnCreator = document.createElement("h4")
     burgerTnCreator.innerText = burgerObj.username;
     burgerTnContainer.append(burgerTnTitle, burgerTnCreator, testImage)
     burgerContainerDiv.append(burgerTnContainer)
@@ -267,11 +272,11 @@ function buildBurger(){
       newBurgerTitleLabel.append(newBurgerTitle)
       newBurgerTitle.type = "text"
       newBurgerTitle.id = "newBurgerTitle"
-  let newBurgerUsername = document.createElement("input")
+  let newBurgerUsername = document.createElement("p")
+      newBurgerUsername.innerText = loggedInUser.username
   let newBurgerUsernameLabel = document.createElement("label")
-      newBurgerUsernameLabel.innerText = "Username: "
+      newBurgerUsernameLabel.innerText = `Username: `
       newBurgerUsernameLabel.append(newBurgerUsername)
-      newBurgerUsername.type = "text"
       newBurgerUsername.id = "newBurgerUsername"
   let newBurgerDescription = document.createElement("textarea")
   let newBurgerDescriptionLabel = document.createElement("label")
@@ -292,7 +297,6 @@ function buildBurger(){
   newBurgerForm.addEventListener("submit", (evt) => {
     evt.preventDefault()
     let createdBurgerTitle = evt.target.newBurgerTitle.value
-    let createdBurgerUsername = evt.target.newBurgerUsername.value;
     let createdBurgerDescription = evt.target.newBurgerDescription.value;
 
     fetch("http://localhost:3000/burgers", {
@@ -301,12 +305,13 @@ function buildBurger(){
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    username: createdBurgerUsername,
+    username: loggedInUser.username,
     burgerName: createdBurgerTitle,
     ingredients: createdIngredientsArray,
     likes: 0,
     comments: [],
-    description: createdBurgerDescription
+    description: createdBurgerDescription,
+    userId: loggedInUser.id
   }),
 })
   .then((r) => r.json())
@@ -392,3 +397,71 @@ function ingredientDisplayer(ingredientObj) {
   
   idNumber = idNumber + 1
 }
+
+let userFormDiv = document.querySelector("#userFormDiv")
+
+let loginForm = document.createElement("form")
+    loginForm.id = "loginForm"
+let usernameInput = document.createElement("input")
+    usernameInput.id = "loginUsername"
+let loginButton = document.createElement("button")
+    loginButton.innerText = "Login"
+    loginButton.classList.add("actionButton")
+    loginButton.id = "loginButton"
+loginForm.append(usernameInput, loginButton)
+
+let registerForm = document.createElement("form")
+    registerForm.id = "registerForm"
+let registerInput = document.createElement("input")
+    registerInput.id = "registerUsername"
+let registerButton = document.createElement("button")
+    registerButton.innerText = "Register"
+    registerButton.classList.add("actionButton")
+    registerButton.id = "registerButton"
+registerForm.append(registerInput, registerButton)
+
+userFormDiv.append(loginForm, registerForm)
+
+loginForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+    let enteredUsername = event.target.loginUsername.value
+    fetch(`http://localhost:3000/users?_embed=burgers&username=${enteredUsername}`)
+    .then(res => res.json())
+    .then((userObjArray) => {
+        if(userObjArray.length > 0){
+            currentUserObjArray = userObjArray
+            loggedInUser.username = currentUserObjArray[0].username
+            loggedInUser.id = currentUserObjArray[0].id
+        } else {
+            alert("Username not found. Please register to continue.")
+        }        
+    })
+    event.target.reset()
+})
+
+registerForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+    let enteredRegistration = event.target.registerUsername.value
+    fetch(`http://localhost:3000/users?_embed=burgers&username=${enteredRegistration}`)
+    .then(res => res.json())
+    .then((userObjArray) => {
+        if(userObjArray.length > 0){
+            alert("Username already exists.")
+        } else {
+            fetch(`http://localhost:3000/users`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: enteredRegistration
+                })
+            })
+                .then(res => res.json())
+                .then(() => {
+                    alert("Welcome to Burger Builder! Please login to get started.")
+                })    
+        }    
+    })
+    event.target.reset()
+})
