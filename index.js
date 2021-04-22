@@ -145,6 +145,7 @@ function displayBurger(burgerObj) {
       burgerDescr.innerText = burgerObj.description
   let burgerRecipeButton = document.createElement("button")
       burgerRecipeButton.innerText = "How To Build This Burger"
+      burgerRecipeButton.classList.add("actionButton")
   let burgerIngredientsDiv = document.createElement("div")
     burgerIngredientsDiv.id = "burgerIngredientsDiv"
   let burgerIngredientsOl = document.createElement("ol")
@@ -156,6 +157,7 @@ function displayBurger(burgerObj) {
     numLikes.innerText = burgerObj.likes
   let burgerLikeButton = document.createElement("button")
   burgerLikeButton.innerText = "Likes: "
+  burgerLikeButton.classList.add("actionButton")
   burgerLikeButton.append(numLikes)
   let burgerCommentDiv = document.createElement("div")
     burgerCommentDiv.id = "burgerCommentDiv"
@@ -165,12 +167,13 @@ function displayBurger(burgerObj) {
     burgerCommentListDiv.id = "burgerCommentList"
   let burgerCommentForm = document.createElement("form")
     burgerCommentForm.id = "burgerCommentForm"
-  let burgerCommentInput = document.createElement("input")
-    burgerCommentInput.type = "textarea"
+  let burgerCommentInput = document.createElement("textarea")
     burgerCommentInput.id = "commentInput"
   let burgerCommentButton = document.createElement("button")
     burgerCommentButton.innerText = "Add Comment"
-  burgerCommentForm.append(burgerCommentInput, burgerCommentButton)      
+    burgerCommentButton.classList.add("actionButton")
+  burgerCommentForm.append(burgerCommentInput)
+    burgerCommentForm.append(burgerCommentButton)      
 
   let commentsArray = burgerObj.comments
     
@@ -278,6 +281,7 @@ function buildBurger(){
   let newBurgerButton = document.createElement("button")
       newBurgerButton.innerText = "Submit"
       newBurgerButton.id = "submitBurgerButton"
+      newBurgerButton.classList.add("actionButton")
   let newBurgerFormDiv = document.createElement("div")
       newBurgerFormDiv.id = "newBurgerFormDiv"
           
