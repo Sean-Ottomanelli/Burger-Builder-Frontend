@@ -41,7 +41,7 @@
 }
 
 body {
-    background-color: powderblue;
+    background-color: paleturquoise;
 }
 
 ul {
@@ -57,6 +57,18 @@ ul {
     border: 1px green solid;
 }
 
+#newBurgerFormDiv{
+    margin: 0 auto;
+    border: 2px purple solid;
+}
+
+#ingredientButtonDiv{
+    margin: 0 auto;
+    border: 2px pink solid;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #displayDiv {
     margin-bottom: 200px;
     display: flex;
@@ -67,5 +79,24 @@ ul {
     min-height: 250px;
 }
 
+.IngredientButtonImage {
+    width: 60px;
+    padding: 10px;
+}
 
+.IngredientButton {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 8px;
 
+}
+
+.burgerTnButton {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 8px;
+}

@@ -112,6 +112,7 @@ fetch("http://localhost:3000/burgers")
 
 function burgerTnButtonMaker(burgerObj) {
     let burgerTnContainer = document.createElement("button")
+    burgerTnContainer.className = "burgerTnButton"
     let testImage = document.createElement ("img")
     testImage.src = "Ingredient Images/Burger Full 1.png"
     testImage.style.width = "100px"
@@ -256,8 +257,12 @@ function buildBurger(){
       newBurgerDescription.id = "newBurgerDescription"
   let newBurgerButton = document.createElement("button")
       newBurgerButton.innerText = "Submit"
+  let newBurgerFormDiv = document.createElement("div")
+      newBurgerFormDiv.id = "newBurgerFormDiv"
+          
   newBurgerForm.append(newBurgerTitleLabel, newBurgerUsernameLabel, newBurgerDescriptionLabel, newBurgerButton)
-  mainContainerDiv.append(newBurgerForm)
+  newBurgerFormDiv.append(newBurgerForm)
+  mainContainerDiv.append(newBurgerFormDiv)
   
   newBurgerForm.addEventListener("submit", (evt) => {
     evt.preventDefault()
@@ -292,25 +297,35 @@ function buildBurger(){
 
 function createIngredientButton(){
   // let ingredientNumber = 0
+    let ingredientButtonDiv= document.createElement("div")
+    ingredientButtonDiv.id = "ingredientButtonDiv"
   ingredientsArray.forEach(function(ingredientObj){
     let ingredientButton = document.createElement("button")
     ingredientButton.innerText = ingredientObj.name
+    ingredientButton.className = "IngredientButton"
+    let ingredientButtonImage = document.createElement("img")
+    ingredientButtonImage.src = ingredientObj["image_url"]
+    ingredientButtonImage.className = "IngredientButtonImage" 
+    ingredientButton.append(ingredientButtonImage)
+    
+
     
     ingredientButton.addEventListener("click", function(){
        let newIngredientObj = {...ingredientObj}
     createdIngredientsArray = [...createdIngredientsArray, newIngredientObj]
-    ingredientDisplayer(newIngredientObj)
+    realTimeIngredientDisplayer(newIngredientObj)
 
     })
     //
     // CSS z-index
     // push
-    mainContainerDiv.append(ingredientButton)
+    ingredientButtonDiv.append(ingredientButton)
   })
+  mainContainerDiv.append(ingredientButtonDiv)
   }
 
 let idNumber = 0
-function ingredientDisplayer(ingredientObj) {
+function realTimeIngredientDisplayer(ingredientObj) {
     let ingredientDiv = document.createElement("div")
     ingredientDiv.classList.add("ingredientDiv")
     ingredientDiv.id = idNumber;
@@ -318,10 +333,7 @@ function ingredientDisplayer(ingredientObj) {
     let ingredientImage = document.createElement("img")
     ingredientImage.src = ingredientObj["image_url"]
     ingredientImage.classList.add("ingredientImage")
-    // ingredientDiv.id = ingredientObj.name + "Image" + idNumber;
     ingredientDiv.style.zIndex = parseInt(idNumber, 10)
-    bottomStyle = idNumber * 40
-    ingredientDiv.style.bottom = bottomStyle + "px"
     ingredientImage.classList.add("ingredientImage")
     ingredientDiv.append(ingredientImage)
     displayContainer.append(ingredientDiv)
@@ -339,4 +351,19 @@ function ingredientDisplayer(ingredientObj) {
 
     
   })
+}
+
+function ingredientDisplayer(ingredientObj) {
+  let ingredientDiv = document.createElement("div")
+  ingredientDiv.classList.add("ingredientDiv")
+  ingredientDiv.id = idNumber;
+  let ingredientImage = document.createElement("img")
+  ingredientImage.src = ingredientObj["image_url"]
+  ingredientImage.classList.add("ingredientImage")
+  ingredientDiv.style.zIndex = parseInt(idNumber, 10)
+  ingredientImage.classList.add("ingredientImage")
+  ingredientDiv.append(ingredientImage)
+  displayContainer.append(ingredientDiv)
+  
+  idNumber = idNumber + 1
 }
