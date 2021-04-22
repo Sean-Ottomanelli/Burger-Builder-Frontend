@@ -257,6 +257,7 @@ buildButton.addEventListener("click", function() {
 
 function buildBurger(){
   let newBurgerForm = document.createElement("form")
+      newBurgerForm.id = "newBurgerForm"
   let newBurgerTitle = document.createElement("input")
   let newBurgerTitleLabel = document.createElement("label")
       newBurgerTitleLabel.innerText = "Title: "
@@ -269,14 +270,14 @@ function buildBurger(){
       newBurgerUsernameLabel.append(newBurgerUsername)
       newBurgerUsername.type = "text"
       newBurgerUsername.id = "newBurgerUsername"
-  let newBurgerDescription = document.createElement("input")
+  let newBurgerDescription = document.createElement("textarea")
   let newBurgerDescriptionLabel = document.createElement("label")
       newBurgerDescriptionLabel.innerText = "Description: "
       newBurgerDescriptionLabel.append(newBurgerDescription)
-      newBurgerDescription.type = "textarea"
       newBurgerDescription.id = "newBurgerDescription"
   let newBurgerButton = document.createElement("button")
       newBurgerButton.innerText = "Submit"
+      newBurgerButton.id = "submitBurgerButton"
   let newBurgerFormDiv = document.createElement("div")
       newBurgerFormDiv.id = "newBurgerFormDiv"
           

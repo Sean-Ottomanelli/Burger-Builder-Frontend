@@ -30,10 +30,20 @@
 
 */
 
+body {
+    font-family: "Rubik"
+}
+
 #topOfPage {
     text-align: center;
 }
 
+#title {
+    font-family: "TitanOne";
+    font-size: 75px;
+    /* letter-spacing: 5px; */
+    color: cornflowerblue;
+}
 
 .ingredientImage {
     width: 400px;
@@ -165,20 +175,73 @@ ul {
     margin-top: 50px;
 }
 
-.actionButton{
+#buildButton {
     background-color: peru;
     border: none;
     width: 180px;
     height: 90px;
     border-radius: 50%;
-    
     box-shadow: 0px 15px 0px goldenrod, 0px 20px 0px red, 0px 25px 0px green, 0px 30px 0px gold, 0px 45px 0px saddlebrown, 0px 60px 0px goldenrod ;
-
+    margin-bottom: 75px;
 }
 
 .burgerButtonText{
+    color: black;
     margin:0;
     font-size: 20px;
+    font-family: "TitanOne";
+    letter-spacing: 1px;
+}
+
+#newBurgerFormDiv {
+    /* display: flex; */
+    width: 400px;
+    /* flex-direction: column; */
+    /* flex-wrap: wrap; */
+    /* border: 1px black solid; */
+    margin-bottom: 35px; 
+}
+
+#newBurgerUsername {
+    display: block;
+    border: 1px black solid;
+    width: 400px;
+    background-color: paleturquoise;
+    border-bottom: 1px grey solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+}
+
+#newBurgerTitle {
+    display: block;
+    border: 1px black solid;
+    width: 400px;
+    background-color: paleturquoise;
+    border-bottom: 1px grey solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+}
+
+
+#newBurgerDescription {
+    display: block;
+    border: 1px black solid;
+    width: 400px;
+    background-color: paleturquoise;
+    border-bottom: 1px grey solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 35px;
+}
+
+#submitBurgerButton {
+    display: block;
+    margin: 0 auto;
 }
 
 /* :root {
