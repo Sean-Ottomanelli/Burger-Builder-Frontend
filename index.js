@@ -110,7 +110,7 @@ let ingredientsArray = [
 
 mainContainerDiv.innerText = ""
 
-fetch("http://localhost:3000/users/?_embed=burgers")
+fetch("https://sheltered-woodland-13584.herokuapp.com/users/?_embed=burgers")
   .then((r) => r.json())
   .then((arrayOfUserObjs) => {
       arrayOfUserObjs.forEach((userObj) => {
@@ -221,7 +221,7 @@ fetch("http://localhost:3000/users/?_embed=burgers")
     if(loggedInUser.username === undefined) {
       alert("Please log in to like burgers.")
     } else{
-      fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
+      fetch(`https://sheltered-woodland-13584.herokuapp.com/burgers/${currentBurger.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -249,7 +249,7 @@ fetch("http://localhost:3000/users/?_embed=burgers")
     if(loggedInUser.username === undefined) {
       alert("Please log in to comment on burgers.")
     } else{
-    fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
+    fetch(`https://sheltered-woodland-13584.herokuapp.com/burgers/${currentBurger.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -328,7 +328,7 @@ function buildBurger(){
     let createdBurgerTitle = evt.target.newBurgerTitle.value
     let createdBurgerDescription = evt.target.newBurgerDescription.value;
 
-    fetch("http://localhost:3000/burgers", {
+    fetch("https://sheltered-woodland-13584.herokuapp.com/burgers", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -452,7 +452,7 @@ userFormDiv.append(loginForm, registerForm)
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault()
     let enteredUsername = event.target.loginUsername.value
-    fetch(`http://localhost:3000/users?_embed=burgers&username=${enteredUsername}`)
+    fetch(`https://sheltered-woodland-13584.herokuapp.com/users?_embed=burgers&username=${enteredUsername}`)
     .then(res => res.json())
     .then((userObjArray) => {
         if(userObjArray.length > 0){
@@ -475,13 +475,13 @@ loginForm.addEventListener("submit", (event) => {
 registerForm.addEventListener("submit", (event) => {
     event.preventDefault()
     let enteredRegistration = event.target.registerUsername.value
-    fetch(`http://localhost:3000/users?_embed=burgers&username=${enteredRegistration}`)
+    fetch(`https://sheltered-woodland-13584.herokuapp.com/users?_embed=burgers&username=${enteredRegistration}`)
     .then(res => res.json())
     .then((userObjArray) => {
         if(userObjArray.length > 0){
             alert("Username already exists.")
         } else {
-            fetch(`http://localhost:3000/users`, {
+            fetch(`https://sheltered-woodland-13584.herokuapp.com/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
