@@ -35,6 +35,10 @@ body {
     color: navy
 }
 
+p {
+    font-size: 16px;
+}
+
 #topOfPage {
     text-align: center;
 }
@@ -44,6 +48,14 @@ body {
     font-size: 75px;
     /* letter-spacing: 5px; */
     color: rgb(153, 153, 255);
+    text-shadow: 7px 7px 5px navy ;
+}
+
+input, textarea {
+    font-family: "Rubik";
+    color: navy;
+    font-size: 16px;
+    
 }
 
 .ingredientImage {
@@ -83,6 +95,18 @@ ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+#commentInput{
+    display: block;
+    border: 1px black solid;
+    width: 400px;
+    background-color: rgb(204, 204, 255);
+    border-bottom: 1px navy solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 35px;
 }
 
 #displayDiv {

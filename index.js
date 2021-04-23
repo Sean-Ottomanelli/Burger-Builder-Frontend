@@ -114,37 +114,40 @@ fetch("http://localhost:3000/users/?_embed=burgers")
       })
     });
 
-function burgerTnButtonMaker(burgerObj) {
-    let burgerTnContainer = document.createElement("button")
-    burgerTnContainer.className = "burgerTnButton"
-    let testImage = document.createElement ("img")
-    testImage.src = "Ingredient Images/Burger Full 1.png"
-    testImage.style.width = "100px"
-    let burgerTnTitle =document.createElement("h3")
-      burgerTnTitle.classList.add("burgerTitleH3")
-    burgerTnTitle.innerText = burgerObj.burgerName
-    let burgerTnCreator = document.createElement("h4")
-    burgerTnCreator.innerText = burgerObj.username;
-    burgerTnContainer.append(burgerTnTitle, burgerTnCreator, testImage)
-    burgerContainerDiv.append(burgerTnContainer)
-    burgerTnContainer.addEventListener("click", (evt) => {
-      displayContainer.innerText = ""
-      displayBurger(burgerObj)
-    })
-}
+    buildButton.disabled = true
+    mainContainerDiv.innerText = ""
     
-function displayBurger(burgerObj) {
-  console.log(burgerObj)
-  currentBurger = burgerObj
-  mainContainerDiv.innerText = ""
-  mainContainerDiv.append(displayContainer)
-  let burgerDetailsDiv = document.createElement("div")
-    burgerDetailsDiv.id = "burgerDetailsDiv"
-  let burgerTitle = document.createElement("h2")
-    burgerTitle.innerText = burgerObj.burgerName
-  let burgerCreator = document.createElement("h3")
-    burgerCreator.innerText = "By: " + burgerObj.username
-  let burgerDescrHeader = document.createElement("h4")
+    function burgerTnButtonMaker(burgerObj) {
+      let burgerTnContainer = document.createElement("button")
+      burgerTnContainer.className = "burgerTnButton"
+      let testImage = document.createElement ("img")
+      testImage.src = "Ingredient Images/Burger Full 1.png"
+      testImage.style.width = "100px"
+      let burgerTnTitle =document.createElement("h3")
+      burgerTnTitle.classList.add("burgerTitleH3")
+      burgerTnTitle.innerText = burgerObj.burgerName
+      let burgerTnCreator = document.createElement("h4")
+      burgerTnCreator.innerText = burgerObj.username;
+      burgerTnContainer.append(burgerTnTitle, burgerTnCreator, testImage)
+      burgerContainerDiv.append(burgerTnContainer)
+      burgerTnContainer.addEventListener("click", (evt) => {
+        displayContainer.innerText = ""
+        displayBurger(burgerObj)
+      })
+    }
+    
+    function displayBurger(burgerObj) {
+      console.log(burgerObj)
+      currentBurger = burgerObj
+      mainContainerDiv.innerText = ""
+      mainContainerDiv.append(displayContainer)
+      let burgerDetailsDiv = document.createElement("div")
+      burgerDetailsDiv.id = "burgerDetailsDiv"
+      let burgerTitle = document.createElement("h2")
+      burgerTitle.innerText = burgerObj.burgerName
+      let burgerCreator = document.createElement("h3")
+      burgerCreator.innerText = "By: " + burgerObj.username
+      let burgerDescrHeader = document.createElement("h4")
       burgerDescrHeader.innerText = "Description:"
   let burgerDescr = document.createElement("p")
       burgerDescr.innerText = burgerObj.description
@@ -164,6 +167,7 @@ function displayBurger(burgerObj) {
   burgerLikeButton.innerText = "Likes: "
   burgerLikeButton.classList.add("actionButton")
   burgerLikeButton.append(numLikes)
+  burgerLikeButton.id = "burgerLikeButton"
   let burgerCommentDiv = document.createElement("div")
     burgerCommentDiv.id = "burgerCommentDiv"
   let burgerCommentHeader = document.createElement("h4")
@@ -177,8 +181,18 @@ function displayBurger(burgerObj) {
   let burgerCommentButton = document.createElement("button")
     burgerCommentButton.innerText = "Add Comment"
     burgerCommentButton.classList.add("actionButton")
+    burgerCommentButton.id = "burgerCommentButton"
   burgerCommentForm.append(burgerCommentInput)
-    burgerCommentForm.append(burgerCommentButton)      
+    burgerCommentForm.append(burgerCommentButton)
+    
+
+if(loggedInUser.username === undefined) {
+  burgerLikeButton.disabled = true
+  burgerCommentButton.disabled = true
+} else{
+  burgerLikeButton.disabled = false
+  burgerCommentButton.disabled = false
+}
 
   let commentsArray = burgerObj.comments
     
@@ -216,13 +230,17 @@ function displayBurger(burgerObj) {
     .then((updatedBurgerObj) => {
       numLikes.innerText = parseInt(numLikes.innerText,10) + 1
       burgerObj.likes = updatedBurgerObj.likes
+      
     })
   });
   
 
   burgerCommentForm.addEventListener("submit", function(event){
     event.preventDefault()
-    let commentInput = event.target.commentInput.value
+    let commentInput = event.target.commentInput.value + `- ${loggedInUser.username}`
+    // if(loggedInUser.username === undefined) {
+    //   alert("Please log in to comment on burgers")
+    // } 
     fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
       method: "PATCH",
       headers: {
@@ -235,7 +253,6 @@ function displayBurger(burgerObj) {
       .then(res => res.json())
       .then(function(updatedBurgerObj){
         currentBurger.comments = updatedBurgerObj.comments
-
         appendComment(commentInput)
       })
       event.target.reset()
@@ -432,9 +449,15 @@ loginForm.addEventListener("submit", (event) => {
             currentUserObjArray = userObjArray
             loggedInUser.username = currentUserObjArray[0].username
             loggedInUser.id = currentUserObjArray[0].id
+            userFormDiv.innerText = "" 
+            userFormDiv.append(logoutButton)
+            let buildButton = document.querySelector("#buildButton")
+            buildButton.disabled = false
+            mainContainerDiv.innerText = ""   
         } else {
             alert("Username not found. Please register to continue.")
-        }        
+        } 
+      
     })
     event.target.reset()
 })
@@ -465,3 +488,19 @@ registerForm.addEventListener("submit", (event) => {
     })
     event.target.reset()
 })
+
+let logoutButton = document.createElement("button")
+    logoutButton.innerText = "Log Out"
+    logoutButton.classList.add("actionButton")
+    logoutButton.id = "logoutButton"
+    logoutButton.addEventListener("click", () => {
+      loggedInUser = {}
+      mainContainerDiv.innerText = ""
+      userFormDiv.innerText = ""
+      userFormDiv.append(loginForm, registerForm)
+      let buildButton = document.querySelector("#buildButton")
+      buildButton.disabled = true   
+    })
+
+
+    
