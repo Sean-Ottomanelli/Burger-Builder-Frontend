@@ -1,3 +1,7 @@
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+}
+
 let burgerContainerDiv = document.querySelector("#burgersContainer")
 let mainContainerDiv = document.querySelector("#mainContainer")
 currentBurger = {}
@@ -55,7 +59,7 @@ let ingredientsArray = [
     image_url: "Ingredient Images/Bacon.png"
   },
   {
-    name: "Arugala", 
+    name: "Arugula", 
     image_url: "Ingredient Images/Arugala.png"
   },
   {
@@ -104,6 +108,7 @@ let ingredientsArray = [
   }
 ]
 
+mainContainerDiv.innerText = ""
 
 fetch("http://localhost:3000/users/?_embed=burgers")
   .then((r) => r.json())
@@ -113,9 +118,6 @@ fetch("http://localhost:3000/users/?_embed=burgers")
         burgersArray.forEach(burgerTnButtonMaker)
       })
     });
-
-    buildButton.disabled = true
-    mainContainerDiv.innerText = ""
     
     function burgerTnButtonMaker(burgerObj) {
       let burgerTnContainer = document.createElement("button")
@@ -137,7 +139,6 @@ fetch("http://localhost:3000/users/?_embed=burgers")
     }
     
     function displayBurger(burgerObj) {
-      console.log(burgerObj)
       currentBurger = burgerObj
       mainContainerDiv.innerText = ""
       mainContainerDiv.append(displayContainer)
@@ -186,13 +187,13 @@ fetch("http://localhost:3000/users/?_embed=burgers")
     burgerCommentForm.append(burgerCommentButton)
     
 
-if(loggedInUser.username === undefined) {
-  burgerLikeButton.disabled = true
-  burgerCommentButton.disabled = true
-} else{
-  burgerLikeButton.disabled = false
-  burgerCommentButton.disabled = false
-}
+// if(loggedInUser.username === undefined) {
+//   burgerLikeButton.disabled = true
+//   burgerCommentButton.disabled = true
+// } else{
+//   burgerLikeButton.disabled = false
+//   burgerCommentButton.disabled = false
+// }
 
   let commentsArray = burgerObj.comments
     
@@ -217,21 +218,25 @@ if(loggedInUser.username === undefined) {
   })
 
   burgerLikeButton.addEventListener("click", () => {
-  fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      likes: burgerObj.likes + 1
-    }),
-  })
-    .then((r) => r.json())
-    .then((updatedBurgerObj) => {
-      numLikes.innerText = parseInt(numLikes.innerText,10) + 1
-      burgerObj.likes = updatedBurgerObj.likes
-      
+    if(loggedInUser.username === undefined) {
+      alert("Please log in to like burgers.")
+    } else{
+      fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        likes: burgerObj.likes + 1
+      }),
     })
+      .then((r) => r.json())
+      .then((updatedBurgerObj) => {
+        numLikes.innerText = parseInt(numLikes.innerText,10) + 1
+        burgerObj.likes = updatedBurgerObj.likes
+        
+      })
+    }
   });
   
 
@@ -241,6 +246,9 @@ if(loggedInUser.username === undefined) {
     // if(loggedInUser.username === undefined) {
     //   alert("Please log in to comment on burgers")
     // } 
+    if(loggedInUser.username === undefined) {
+      alert("Please log in to comment on burgers.")
+    } else{
     fetch(`http://localhost:3000/burgers/${currentBurger.id}`, {
       method: "PATCH",
       headers: {
@@ -256,6 +264,7 @@ if(loggedInUser.username === undefined) {
         appendComment(commentInput)
       })
       event.target.reset()
+    }
   })
 
   burgerIngredientsDiv.append(burgerRecipeButton)
@@ -272,12 +281,15 @@ if(loggedInUser.username === undefined) {
 
 
 buildButton.addEventListener("click", function() {
-  mainContainerDiv.innerText = ""
-  displayContainer.innerText = ""
-  mainContainerDiv.append(displayContainer)
-  buildBurger()
-  createIngredientButton()
-
+  if(loggedInUser.username === undefined) {
+    alert("Please log in to build burgers.")
+  } else{
+    mainContainerDiv.innerText = ""
+    displayContainer.innerText = ""
+    mainContainerDiv.append(displayContainer)
+    buildBurger()
+    createIngredientButton()
+  }
 })
 
 function buildBurger(){
@@ -388,11 +400,9 @@ function realTimeIngredientDisplayer(ingredientObj) {
     idNumber = idNumber + 1
 
   ingredientImage.addEventListener("click", () => {
-    console.log(ingredientObj)
     let keptIngredientsArray = createdIngredientsArray.filter((existingIngredientObj) => {
       return existingIngredientObj.id !== ingredientObj.id
     })
-    console.log(keptIngredientsArray)
     createdIngredientsArray = keptIngredientsArray
     ingredientDiv.remove();
 
@@ -422,7 +432,7 @@ let loginForm = document.createElement("form")
 let usernameInput = document.createElement("input")
     usernameInput.id = "loginUsername"
 let loginButton = document.createElement("button")
-    loginButton.innerText = "Login"
+    loginButton.innerText = "Log In"
     loginButton.classList.add("actionButton")
     loginButton.id = "loginButton"
 loginForm.append(usernameInput, loginButton)
@@ -482,7 +492,7 @@ registerForm.addEventListener("submit", (event) => {
             })
                 .then(res => res.json())
                 .then(() => {
-                    alert("Welcome to Burger Builder! Please login to get started.")
+                    alert("Welcome to Burger Builder! Please log in to get started.")
                 })    
         }    
     })
@@ -498,8 +508,6 @@ let logoutButton = document.createElement("button")
       mainContainerDiv.innerText = ""
       userFormDiv.innerText = ""
       userFormDiv.append(loginForm, registerForm)
-      let buildButton = document.querySelector("#buildButton")
-      buildButton.disabled = true   
     })
 
 
